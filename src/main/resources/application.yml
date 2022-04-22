@@ -5,3 +5,7 @@
         port: 27017
         host: localhost
     logging.level: root
+    security:
+      user:
+        name: admin
+        password: admin
