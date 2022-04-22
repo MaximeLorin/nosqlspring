@@ -5,6 +5,7 @@ import com.example.noSql.mongo.domain.repositories.ArticlesRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -30,7 +31,13 @@ public class ArticleService {
     public Optional<Article> getArticleById(String id){
         return articlesRepository.findById(id);
     }
+    public List<Article> getArticleByTitle(String title){
+        return articlesRepository.findByTitle(title);
+    }
+    public List<Article> getArticleByTitlePart(String titlePart){
 
+        return articlesRepository.findByTitlePart(titlePart);
+    }
     public void deleteOneArticle(String id){
         articlesRepository.deleteById(id);
     }

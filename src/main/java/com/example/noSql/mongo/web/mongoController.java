@@ -33,6 +33,14 @@ public class mongoController {
         return articleService.getArticleById(id).map(u -> ResponseEntity.ok(u)).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/articles/search")
+    List<Article> getByTitle(@RequestParam("title") String title){
+        return articleService.getArticleByTitle(title);
+    }
+    @GetMapping("/articles/searchPart")
+    List<Article> getByTitlePart(@RequestParam("title") String titlePart){
+        return articleService.getArticleByTitlePart(titlePart);
+    }
     @DeleteMapping("/articles/{id}")
     @ResponseStatus(HttpStatus.OK)
     void deleteByid(@PathVariable String id){
@@ -43,7 +51,6 @@ public class mongoController {
     ResponseEntity<Article> changeContent(@PathVariable String id, @RequestBody ChangeArticleContentDTO changeArticleContentDTO){
         try{
             Article changedArticle= articleService.changeContent(id,changeArticleContentDTO.content());
-
             return ResponseEntity.status(HttpStatus.CREATED).body(changedArticle);
         }catch (Exception e){
             return ResponseEntity.notFound().build();
