@@ -1,19 +1,19 @@
-package com.example.noSql.mongo.domain.application;
+package com.example.nosql.mongo.domain.application;
 
-import com.example.noSql.mongo.domain.model.Article;
-import com.example.noSql.mongo.domain.repositories.ArticlesRepository;
-import org.springframework.stereotype.Component;
+import com.example.nosql.mongo.domain.model.Article;
+import com.example.nosql.mongo.domain.repositories.ArticlesRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
 
-@Component
+
+@Service
 public class ArticleService {
-    public ArticlesRepository articlesRepository;
+    public final ArticlesRepository articlesRepository;
 
-
+//    @Autowired
     public ArticleService(ArticlesRepository articlesRepository) {
         this.articlesRepository = articlesRepository;
     }
@@ -25,19 +25,19 @@ public class ArticleService {
     }
 
     public List<Article> getAllArticles(){
-        return articlesRepository.findAll();
+        return (List<Article>) articlesRepository.findAll();
     }
 
     public Optional<Article> getArticleById(String id){
         return articlesRepository.findById(id);
     }
-    public List<Article> getArticleByTitle(String title){
-        return articlesRepository.findByTitle(title);
-    }
-    public List<Article> getArticleByTitlePart(String titlePart){
-
-        return articlesRepository.findByTitlePart(titlePart);
-    }
+//    public List<Article> getArticleByTitle(String title){
+//        return articlesRepository.findByTitle(title);
+//    }
+//    public List<Article> getArticleByTitlePart(String titlePart){
+//
+//        return articlesRepository.findByTitlePart(titlePart);
+//    }
     public void deleteOneArticle(String id){
         articlesRepository.deleteById(id);
     }

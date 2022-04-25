@@ -1,16 +1,22 @@
-package com.example.noSql.mongo.domain.model;
+package com.example.nosql.mongo.domain.model;
 
+import javax.persistence.*;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-@Document(collection = "Articles")
+@Entity
+@Table(name = "articles")
+@Access(AccessType.FIELD)
 public class Article {
     @Id
     private String id;
+    @Column
     private String title;
+    @Column
     private String summary;
+    @Column
     private String content;
+
+    protected Article() {
+    }
 
     public Article(String id, String title, String summary, String content) {
         this.id = id;

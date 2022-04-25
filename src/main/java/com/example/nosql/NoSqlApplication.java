@@ -1,4 +1,4 @@
-package com.example.noSql;
+package com.example.nosql;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

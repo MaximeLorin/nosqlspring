@@ -1,9 +1,9 @@
-package com.example.noSql.mongo.web;
+package com.example.nosql.mongo.web;
 
-import com.example.noSql.mongo.domain.application.ArticleService;
-import com.example.noSql.mongo.domain.model.Article;
-import com.example.noSql.mongo.domain.model.ChangeArticleContentDTO;
-import com.example.noSql.mongo.domain.model.createArticleDTO;
+import com.example.nosql.mongo.domain.application.ArticleService;
+import com.example.nosql.mongo.domain.model.Article;
+import com.example.nosql.mongo.domain.model.ChangeArticleContentDTO;
+import com.example.nosql.mongo.domain.model.createArticleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +13,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "*")
 public class mongoController {
     @Autowired
-    public ArticleService articleService;
+    private ArticleService articleService;
 
     @PostMapping("/articles")
     ResponseEntity<Article> createArticle(@RequestBody createArticleDTO articleDTO){
@@ -34,14 +33,14 @@ public class mongoController {
         return articleService.getArticleById(id).map(u -> ResponseEntity.ok(u)).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/articles/search")
-    List<Article> getByTitle(@RequestParam("title") String title){
-        return articleService.getArticleByTitle(title);
-    }
-    @GetMapping("/articles/searchPart")
-    List<Article> getByTitlePart(@RequestParam("title") String titlePart){
-        return articleService.getArticleByTitlePart(titlePart);
-    }
+//    @GetMapping("/articles/search")
+//    List<Article> getByTitle(@RequestParam("title") String title){
+//        return articleService.getArticleByTitle(title);
+//    }
+//    @GetMapping("/articles/searchPart")
+//    List<Article> getByTitlePart(@RequestParam("title") String titlePart){
+//        return articleService.getArticleByTitlePart(titlePart);
+//    }
     @DeleteMapping("/articles/{id}")
     @ResponseStatus(HttpStatus.OK)
     void deleteByid(@PathVariable String id){
