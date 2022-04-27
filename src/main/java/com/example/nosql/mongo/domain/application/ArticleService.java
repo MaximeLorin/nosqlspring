@@ -34,10 +34,10 @@ public class ArticleService {
 //    public List<Article> getArticleByTitle(String title){
 //        return articlesRepository.findByTitle(title);
 //    }
-//    public List<Article> getArticleByTitlePart(String titlePart){
-//
-//        return articlesRepository.findByTitlePart(titlePart);
-//    }
+    public List<Article> getArticleByTitlePart(String titlePart){
+
+        return articlesRepository.findByTitle(titlePart);
+    }
     public void deleteOneArticle(String id){
         articlesRepository.deleteById(id);
     }

@@ -1,3 +1,5 @@
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+
 create table if not exists users(
     id char(36) primary key,
     email text not null unique,

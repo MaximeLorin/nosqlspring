@@ -37,10 +37,10 @@ public class mongoController {
 //    List<Article> getByTitle(@RequestParam("title") String title){
 //        return articleService.getArticleByTitle(title);
 //    }
-//    @GetMapping("/articles/searchPart")
-//    List<Article> getByTitlePart(@RequestParam("title") String titlePart){
-//        return articleService.getArticleByTitlePart(titlePart);
-//    }
+    @GetMapping("/articles/searchPart")
+    List<Article> getByTitlePart(@RequestParam("title") String titlePart){
+        return articleService.getArticleByTitlePart(titlePart);
+    }
     @DeleteMapping("/articles/{id}")
     @ResponseStatus(HttpStatus.OK)
     void deleteByid(@PathVariable String id){
