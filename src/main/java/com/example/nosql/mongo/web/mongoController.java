@@ -19,7 +19,7 @@ public class mongoController {
 
     @PostMapping("/articles")
     ResponseEntity<Article> createArticle(@RequestBody createArticleDTO articleDTO){
-        Article article=articleService.newArticle(articleDTO.title(),articleDTO.summary(),articleDTO.content());
+        Article article=articleService.newArticle(articleDTO.title(),articleDTO.image(),articleDTO.summary(),articleDTO.content(),articleDTO.draft());
         return ResponseEntity.status(HttpStatus.CREATED).body(article);
     }
 

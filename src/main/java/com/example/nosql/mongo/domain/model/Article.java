@@ -9,22 +9,29 @@ public class Article {
     @Id
     private String id;
     @Column
+    private String image;
+    @Column
     private String title;
     @Column
     private String summary;
     @Column
     private String content;
+    private boolean draft;
 
-    protected Article() {
-    }
+    @ManyToOne(cascade = CascadeType.ALL)
+    private User user;
 
-    public Article(String id, String title, String summary, String content) {
+    public Article(String id, String title,String image, String summary, String content,boolean draft) {
         this.id = id;
         this.title = title;
+        this.image = image;
         this.summary = summary;
         this.content = content;
+        this.draft = draft;
     }
+    protected Article(){
 
+    }
     public String getId() {
         return this.id;
     }
@@ -55,5 +62,21 @@ public class Article {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public boolean isDraft() {
+        return draft;
+    }
+
+    public void setDraft(boolean draft) {
+        this.draft = draft;
     }
 }

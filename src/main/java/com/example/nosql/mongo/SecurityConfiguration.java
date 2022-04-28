@@ -1,5 +1,6 @@
 package com.example.nosql.mongo;
 
+import com.example.nosql.mongo.domain.repositories.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -8,6 +9,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -23,6 +27,7 @@ public class SecurityConfiguration {
                 .authorizeRequests(authorize -> authorize
                         .antMatchers(HttpMethod.GET, "/api/articles").permitAll()
                         .antMatchers(HttpMethod.GET, "/api/articles/*").permitAll()
+                        .antMatchers(HttpMethod.POST, "/api/users").permitAll()
                         .anyRequest()
                         .authenticated()
                 )
@@ -46,13 +51,28 @@ public class SecurityConfiguration {
             }
         };
     }
-
     @Bean
-    public UserDetailsService users(){
-        UserDetails maxime= User.builder().username("maxime").password("{noop}maxime").roles("USER").build();
-        UserDetails amandine= User.builder().username("amandine").password("{noop}password").roles("USER").build();
-        UserDetails maud= User.builder().username("maud").password("{bcrypt}$2y$10$7BCRAh8SE2v53kMGPTqkdOJUEnmaxk4vfqF6DJHfmDKfXwotTdame").roles("MANAGER").build();
-        UserDetails aymeric= User.builder().username("aymeric").password("{MD5}5f4dcc3b5aa765d61d8327deb882cf99").roles("MANAGER").build();
-        return new InMemoryUserDetailsManager(maxime, amandine, maud,aymeric);
+    UserDetailsService userDetailsService(UserRepository userRepository) {
+        return new UserDetailsService() {
+            @Override
+            public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+                return userRepository.findByUsername(username).orElse(null);
+            }
+        };
     }
+    @Bean
+    public PasswordEncoder encoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+
+
+//    @Bean
+//    public UserDetailsService users(){
+//        UserDetails maxime= User.builder().username("maxime").password("{noop}maxime").roles("USER").build();
+//        UserDetails amandine= User.builder().username("amandine").password("{noop}password").roles("USER").build();
+//        UserDetails maud= User.builder().username("maud").password("{bcrypt}$2y$10$7BCRAh8SE2v53kMGPTqkdOJUEnmaxk4vfqF6DJHfmDKfXwotTdame").roles("MANAGER").build();
+//        UserDetails aymeric= User.builder().username("aymeric").password("{MD5}5f4dcc3b5aa765d61d8327deb882cf99").roles("MANAGER").build();
+//        return new InMemoryUserDetailsManager(maxime, amandine, maud,aymeric);
+//    }
 }

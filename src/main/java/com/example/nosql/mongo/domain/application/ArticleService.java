@@ -18,8 +18,8 @@ public class ArticleService {
         this.articlesRepository = articlesRepository;
     }
 
-    public Article newArticle(String title, String summary, String content){
-        Article article = new Article(UUID.randomUUID().toString(),title,summary,content);
+    public Article newArticle(String title,String image,String summary, String content,boolean draft){
+        Article article = new Article(UUID.randomUUID().toString(),title,image,summary,content,draft);
         articlesRepository.save(article);
         return article;
     }
