@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -23,5 +24,8 @@ public class UserService {
         User user = new User(UUID.randomUUID().toString(),username,passwordEncoder.encode(password),email);
         userRepository.save(user);
         return user;
+    }
+    public Optional<User> getUserByUsername(String username){
+        return userRepository.findByUsername(username);
     }
 }

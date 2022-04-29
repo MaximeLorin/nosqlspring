@@ -1,6 +1,7 @@
 package com.example.nosql.mongo.domain.application;
 
 import com.example.nosql.mongo.domain.model.Article;
+import com.example.nosql.mongo.domain.model.User;
 import com.example.nosql.mongo.domain.repositories.ArticlesRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +19,8 @@ public class ArticleService {
         this.articlesRepository = articlesRepository;
     }
 
-    public Article newArticle(String title,String image,String summary, String content,boolean draft){
-        Article article = new Article(UUID.randomUUID().toString(),title,image,summary,content,draft);
+    public Article newArticle(String title, String image, String summary, String content, boolean draft, User user){
+        Article article = new Article(UUID.randomUUID().toString(),title,image,summary,content,draft,user);
         articlesRepository.save(article);
         return article;
     }

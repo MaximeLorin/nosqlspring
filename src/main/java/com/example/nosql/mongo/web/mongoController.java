@@ -3,24 +3,36 @@ package com.example.nosql.mongo.web;
 import com.example.nosql.mongo.domain.application.ArticleService;
 import com.example.nosql.mongo.domain.model.Article;
 import com.example.nosql.mongo.domain.model.ChangeArticleContentDTO;
+import com.example.nosql.mongo.domain.model.User;
 import com.example.nosql.mongo.domain.model.createArticleDTO;
+import com.example.nosql.mongo.domain.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
 public class mongoController {
     @Autowired
     private ArticleService articleService;
+    @Autowired
+    private UserRepository userRepository;
 
     @PostMapping("/articles")
     ResponseEntity<Article> createArticle(@RequestBody createArticleDTO articleDTO){
-        Article article=articleService.newArticle(articleDTO.title(),articleDTO.image(),articleDTO.summary(),articleDTO.content(),articleDTO.draft());
-        return ResponseEntity.status(HttpStatus.CREATED).body(article);
+        Optional<User> user = this.userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        if(user.isPresent()){
+
+            Article article=articleService.newArticle(articleDTO.title(),articleDTO.image(),articleDTO.summary(),articleDTO.content(),articleDTO.draft(),user.get());
+            return ResponseEntity.status(HttpStatus.CREATED).body(article);
+        }
+
+        return null;
     }
 
     @GetMapping("/articles")

@@ -19,19 +19,23 @@ public class Article {
     private boolean draft;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    public Article(String id, String title,String image, String summary, String content,boolean draft) {
+    public Article(String id, String title,String image, String summary, String content,boolean draft,User user) {
         this.id = id;
         this.title = title;
         this.image = image;
         this.summary = summary;
         this.content = content;
         this.draft = draft;
+        this.user=user;
     }
     protected Article(){
 
     }
+
+
     public String getId() {
         return this.id;
     }

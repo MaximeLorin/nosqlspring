@@ -28,6 +28,7 @@ public class SecurityConfiguration {
                         .antMatchers(HttpMethod.GET, "/api/articles").permitAll()
                         .antMatchers(HttpMethod.GET, "/api/articles/*").permitAll()
                         .antMatchers(HttpMethod.POST, "/api/users").permitAll()
+                        .antMatchers(HttpMethod.GET, "/api/users/{username}").permitAll()
                         .anyRequest()
                         .authenticated()
                 )
